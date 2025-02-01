@@ -1,12 +1,3 @@
-# Vefforritun 2 2025, verkefni 1
-
-## Markmið
-
-- Upprifjun og notkun á verkfærum og tólum úr vefforritun 1.
-- Ósamstillt forritun með Node.js og notkun á módúlum.
-- Útbúa test og setja upp keyrslu á testum með GitHub Actions.
-- Vinnsla með gagnastrúktúra og staðfestingu á gögnum.
-
 ## Verkefnið
 
 Gefin eru gögn fyrir krossaspurningar um HTML, CSS og JavaScript ásamt skrá sem vísar í þær. Skrifa skal forrit sem les þessar skrár, útbýr HTML í build skrefi fyrir spurningarnar og tengir við framenda útfærslu.
@@ -101,10 +92,6 @@ Setja skal upp vefinn með niðurstöðum á Netlify tengt við GitHub. Við hve
 - 10% – Tæki og tól skv. forskrift, `eslint` uppsett.
 - 10% – GitHub & Netlify, GitHub actions uppsett.
 
-## Sett fyrir
-
-Verkefni sett fyrir í fyrirlestri miðvikudaginn 15. janúar 2025.
-
 ## Skil
 
 Skila skal í Canvas í seinasta lagi fyrir lok dags fimmtudaginn 6. febrúar 2025.
@@ -116,26 +103,3 @@ Skil skulu innihalda:
   - `osk`
   - `ofurtumi`
   - `tomasblaer`
-
-## Einkunn
-
-Leyfilegt er að ræða, og vinna saman að verkefni en **skrifið ykkar eigin lausn**. Ef tvær eða fleiri lausnir eru mjög líkar þarf að færa rök fyrir því, annars munu allir hlutaðeigandi hugsanlega fá 0 fyrir verkefnið.
-
-Ef stórt mállíkan (LLM, „gervigreind“, t.d. ChatGTP) er notað til að skrifa part af lausn skal taka það fram. [Sjá nánar á upplýsingasíða um gervigreind hjá HÍ](https://gervigreind.hi.is/).
-
-Sett verða fyrir ([sjá nánar í kynningu á áfanga](https://github.com/vefforritun/vef2-2025/blob/main/namsefni/01.kynning/1.kynning.md)):
-
-- fimm minni sem gilda 10% hvert, samtals 50% af lokaeinkunn.
-- tvö hópverkefni þar sem hvort um sig gildir 20%, samtals 40% af lokaeinkunn.
-- einstaklingsverkefni sem gildir 15–25% af lokaeinkunn.
-
----
-
-> Útgáfa 0.4
-
-| Útgáfa | Breyting                                                                               |
-| ------ | -------------------------------------------------------------------------------------- |
-| 0.1    | Fyrsta útgáfa                                                                          |
-| 0.2    | Bæta við 10% sem vantaði í mat; fjarlægja kröfu um `stylelint`; nánar um framendakröfu |
-| 0.3    | Bæta við að nota megi Vitest fyrir próf                                                |
-| 0.4    | Bæta við dæmi um template strings og syntax highlighting                               |
