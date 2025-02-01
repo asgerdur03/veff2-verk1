@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "verkefni 1 í vefforritun 2",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
