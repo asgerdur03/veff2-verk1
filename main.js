@@ -1,3 +1,4 @@
+import { mkdir } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -34,6 +35,8 @@ async function readJson(filePath) {
  * @returns {Promise<void>}
  */
 async function writeHtml(data) {
+
+    fs.mkdir('dist', { recursive: true });
     const htmlFilePath = 'dist/index.html';
 
     const html = data.map((item) => 
@@ -81,7 +84,7 @@ async function main() {
 
     console.log(indexData);
 
-    
+
 }
 
 main();
