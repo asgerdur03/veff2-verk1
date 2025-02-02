@@ -1,0 +1,54 @@
+:root {
+    --spacing: 1rem;
+    --max-width: 56rem;
+    --font-size-button: 1rem;
+    --font-family: -system-ui, -apple-system, blinkmacsystemfont, 'Segoe UI',
+    roboto, oxygen, ubuntu, cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --color-light-gray: #e9e9e9;
+    --color-black: #000;
+}
+
+html {
+    box-sizing: border-box;
+    font-family: var(--font-family);
+    padding: var(--spacing);
+    font-size: var(--font-size-button);
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+
+
+.hidden{
+    display: none;
+}
+
+body{
+    background-color: rgb(203, 144, 199);
+    max-width: 1200px;
+    justify-self: center;
+}
+
+
+li{
+    list-style-type: none;
+    padding: 10px;
+}
+
+div{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    justify-content: center;
+}
+
+div .buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around
+};
+

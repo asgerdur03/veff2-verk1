@@ -13,7 +13,7 @@ export async function readJson(filePath) {
     try{
         data = await fs.readFile(path.resolve(filePath), 'utf-8');
     }catch (e) {
-        console.error('Error reading file: ', e.message);
+        console.error('Error reading file: ', filePath);
         return null;
     }
 

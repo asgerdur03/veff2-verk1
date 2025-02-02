@@ -18,41 +18,53 @@ async function writeHtml(data) {
 
     const htmlFilePath = 'dist/index.html';
 
-    // gögn út json, nafn og linkur
-    const html = data.map((item) => 
-        `<li>${item.title} <strong><a href="${item.file.replace('.json', '.html')}">${item.file}</a></strong></li>`).join('\n');
-
-    // html fyrir index.json
-    const htmlContent = /*html*/`
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Vef2-2025-v1</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h1>Vef2-2025-v1</h1>
-        <p>Hér eru spurningar um efni. Veldu það efni sem þú vilt skoða</p>
-        <ul>
-            ${html}
-        </ul>
-    </body>
-    </html>`;
-
-    await fs.writeFile(htmlFilePath, htmlContent, 'utf-8');
+    let links = [];
 
     // gera HTML fyrir hvert efni? kalla svo á parseContent til að fjarlægja data þaðan?
     for (const item of data) {
         const contentJson = await readJson(`./data/${item.file}`);
         if (!contentJson) {
             console.warn(`No content found, skipping ${item.file}`);
+            
             continue;
+        }else{
+            //links.push(`${item.file.replace('.json', '.html')}`) 
+            links[item.title] = `${item.file.replace('.json', '.html')}`
+
         }
         const link = `./dist/${item.file.replace('.json', '.html')}`
         await fs.writeFile(link, contentHTML(contentJson), 'utf-8');
     }
 
+    const html = Object.entries(links).map(([title, link]) => 
+        `<li>${title} <strong><a href="${link}">${link}</a></strong></li>`).join('\n');
+
+
+    // html fyrir index.json
+
+    const htmlContent = /*html*/`
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Vef2-2025-v1</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../public/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Vef2-2025-v1</h1>
+        <p>Hér eru spurningar um efni. Veldu það efni sem þú vilt skoða</p>
+        <div>
+            <ul>
+                ${html}
+            </ul>
+        </div>
+    </body>
+    </html>`;
+
+    await fs.writeFile(htmlFilePath, htmlContent, 'utf-8');
+
+    
 }
 
 function contentHTML(data) {
@@ -69,7 +81,8 @@ function contentHTML(data) {
         <head>
             <meta charset="UTF-8">
             <title>${data.title}</title>
-            <link rel="stylesheet" href="style.css">
+            <link rel="stylesheet" href="../public/style.css">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
         <body>
             <h1>${data.title}</h1>
@@ -90,15 +103,29 @@ function contentHTML(data) {
                             <label>
                                 <input type="checkbox">
                                 ${escapeHtml(a.answer)}
-                                <p class="hidden">${a.correct ? "✅" : ""}</p>
+                                <p class="hidden">${a.correct ? "✅ Rétt" : ""}</p>
                             </label>
                         </li>`).join("\n")
                     : "<li>Error: No answers available</li>"
             }
+            <button type="submit" onclick="show(this)">Skoða svar</button>
+            <button type="submit" onclick="hide(this)">Fela svar</button>
         </ul>
-        <button type="submit">Skoða svar</button>
-        <button type="submit">Fela svar</button>
+    
     </div>
+    <script>
+    function show(button) {
+        const answers = button.parentElement.querySelectorAll("p.hidden");
+        answers.forEach(answer => answer.classList.remove("hidden"));
+        console.log("show");
+    }
+
+    function hide(button) {
+        const answers = button.parentElement.querySelectorAll("p");
+        answers.forEach(answer => answer.classList.add("hidden"));
+        console.log("hide");
+    }
+</script>
     
 `)
 .join("\n");
@@ -109,7 +136,8 @@ function contentHTML(data) {
     <html>
     <head>
         <title>${data.title}</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../public/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <h1>${data.title}</h1>
@@ -150,10 +178,6 @@ function parseIndexJson(data) {
     return  true;
         
     });
-
-    // remove data that leeds to nowhere
-    // all cases where file does not exist in /data directory
-
     return data;
 }
 

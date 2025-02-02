@@ -1,25 +1,16 @@
+## Túlkun gagna
 
-data:
+- index.html: ógild færsla og ógild skrá var fjarlægt, en ekki ógild gögn, því þau gögn eru á réttu formi og hafa skrá, svo ætti ekki að vera eitt nema bara af því að ég veit að gögnin þar eru röng
 
-- index.json: upplýsingar fyrir index page, með link á undirsíður
-    - invalid.js: gild vísun í skrá sem er ekki til
-    - foo: óglid vísun
+- corrupt.html: hefur síðu með villuskilaboðum, og link til baka
 
-title: heiti spurningaflokks
-file: vísun í .json skrá með spurningum
+- html.html: hefur eina ónýta spurningu sem byrtist, en sýnir villuskilaborð
 
-
-- corrupt.json: gölluð gögn í skrá, en hefur vísun í index.js
-
-
-- css, html, js: legit, inniheldur titil, lista af spurningur og svörunum við þeim
-
-title: heiti spurningaflokks
-questions: fylki af spurningurm, hver spurning samanstendur af:
-    question: spurningatexti
-    answers: fylki af svarmöguleikum
-        answer: svarmöguleiki
-        correct: true ef svar er rétt
+- aðrar skrár eru venjulegar
 
 
 
+### TODO
+- setja upp eslint
+- adda dæmatímakennurum
+- test shit
