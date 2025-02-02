@@ -19,7 +19,6 @@ async function writeHtml(data) {
     const htmlFilePath = 'dist/index.html';
 
     // gögn út json, nafn og linkur
-    
     const html = data.map((item) => 
         `<li>${item.title} <strong><a href="${item.file.replace('.json', '.html')}">${item.file}</a></strong></li>`).join('\n');
 
@@ -29,6 +28,8 @@ async function writeHtml(data) {
     <html>
     <head>
         <title>Vef2-2025-v1</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <h1>Vef2-2025-v1</h1>
@@ -41,10 +42,7 @@ async function writeHtml(data) {
 
     await fs.writeFile(htmlFilePath, htmlContent, 'utf-8');
 
-
-
     // gera HTML fyrir hvert efni? kalla svo á parseContent til að fjarlægja data þaðan?
-
     for (const item of data) {
         const contentJson = await readJson(`./data/${item.file}`);
         if (!contentJson) {
@@ -52,28 +50,89 @@ async function writeHtml(data) {
             continue;
         }
         const link = `./dist/${item.file.replace('.json', '.html')}`
-        //console.log(contentJson);
-        
         await fs.writeFile(link, contentHTML(contentJson), 'utf-8');
     }
 
 }
 
 function contentHTML(data) {
-    parseContentJson(data);
+    if (!data || typeof data !== "object") {
+        console.error('Illegal content in content.json: ', data);
+        return "<h1>Error</h1>";
+    }
+
+    if (!data.questions || !Array.isArray(data.questions)) {
+        console.warn("Warning: No valid questions found in:", data.title);
+        return ` 
+        <!DOCTYPE html>
+        <html lang="is">
+        <head>
+            <meta charset="UTF-8">
+            <title>${data.title}</title>
+            <link rel="stylesheet" href="style.css">
+        </head>
+        <body>
+            <h1>${data.title}</h1>
+            <p>Error: No questions available</p>
+            <a href="./index.html">Til baka</a>
+        </body>
+        </html>`;
+    }
+
+    const content = data.questions.map((q) => `
+    <div class="question">
+        <p><strong>Spurning:</strong> ${escapeHtml(q.question)}</p>
+        <ul>
+            ${
+                Array.isArray(q.answers) 
+                    ? q.answers.map(a => 
+                        `<li>
+                            <label>
+                                <input type="checkbox">
+                                ${escapeHtml(a.answer)}
+                                <p class="hidden">${a.correct ? "✅" : ""}</p>
+                            </label>
+                        </li>`).join("\n")
+                    : "<li>Error: No answers available</li>"
+            }
+        </ul>
+        <button type="submit">Skoða svar</button>
+        <button type="submit">Fela svar</button>
+    </div>
+    
+`)
+.join("\n");
+        
+
     return /*html*/`
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Vef2-2025-v1</title>
+        <title>${data.title}</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h1>aukasíða fyrir prófun</h1>
-        <h2>${data.title}</h2>
+        <h1>${data.title}</h1>
+        <div>${content}</div>
+
+        <a href="./index.html">Til baka</a>
     
     </body>
     </html>`
 
+}
+
+function escapeHtml(text) {
+    // svo að html í spurningum byrtist sem texti en ekki html, chat
+    if (typeof text !== "string") {
+        return String(text || ""); // Convert undefined/null to empty string
+    }
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 }
 
 
@@ -98,14 +157,6 @@ function parseIndexJson(data) {
     return data;
 }
 
-function parseContentJson(data) {
-    // remove illegal content, title, questions, question, answers or answer
-    if (!data && !data.title) {
-        return "<h1>Error</h1>";
-    }
-    
-}
-    // remove from the content pages, 
 
 /**
  * Keyrir forrit
