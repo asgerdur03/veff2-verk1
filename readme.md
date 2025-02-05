@@ -12,5 +12,5 @@
 
 ### TODO
 - setja upp eslint
-- adda dæmatímakennurum
 - test shit
+- laga package.json svo að css skrá copyis inní dist möppu, svo netlify finni hana, og þá breyta path í html
