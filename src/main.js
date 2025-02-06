@@ -1,11 +1,7 @@
-import { mkdir, write } from 'node:fs';
 import fs from 'node:fs/promises';
-
 import {readJson} from './lib/readJson.js';
-import { parse } from 'node:path';
-
-
-
+import { escapeHtml } from './lib/replace.js';
+import { parseIndexJson } from './lib/parse.js';
 
 const INDEX_PATH = './data/index.json';
 
@@ -150,38 +146,6 @@ function contentHTML(data) {
 
 }
 
-function escapeHtml(text) {
-    // svo að html í spurningum byrtist sem texti en ekki html, chat
-    if (typeof text !== "string") {
-        return String(text || ""); // Convert undefined/null to empty string
-    }
-    return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-}
-
-
-/**
- * @param {unknown} data 
- * @returns {any}
- */
-function parseIndexJson(data) {
-    // remove illegal data, where json data does not have a title or file
-    data = data.filter((item) => {
-        if (!item.title || !item.file) {
-            console.log('Illegal data in index.json: ', item);
-            return false;
-    }
-    return  true;
-        
-    });
-    return data;
-}
-
-
 /**
  * Keyrir forrit
  * 1. Sækir gögn
@@ -194,7 +158,6 @@ async function main() {
     const indexData = parseIndexJson(indexJson);
 
     writeHtml(indexData);
-
 }
 
 main();

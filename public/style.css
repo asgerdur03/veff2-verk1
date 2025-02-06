@@ -30,6 +30,7 @@ html {
 body{
     background-color: rgb(203, 144, 199);
     max-width: 1200px;
+    min-width: 300px;
     justify-self: center;
 }
 
